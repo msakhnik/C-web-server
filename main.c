@@ -1,19 +1,3 @@
-/*
-AUTHOR: Abhijeet Rastogi (http://www.google.com/profiles/abhijeet.1989)
-
-This is a very simple HTTP server. Default port is 10000 and ROOT for the server is your current working directory..
-
-You can provide command line arguments like:- $./a.aout -p [port] -r [path]
-
-for ex. 
-$./a.out -p 50000 -r /home/
-to start a server at port 50000 with root directory as "/home"
-
-$./a.out -r /home/shadyabhi
-starts the server at port 10000 with ROOT as /home/shadyabhi
-
- */
-
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -178,6 +162,7 @@ void respond(int n)
                     send(clients[n], "HTTP/1.0 200 OK\n\n", 17, 0);
                     while ((bytes_read = read(fd, data_to_send, BYTES)) > 0)
                     {
+                        printf("Bytes read: %d\n", bytes_read);
                         strncat(php, (char *)path, strlen(path));
                         printf("%s\n", php);
                         memset(buffer, '\0', sizeof(buffer));
@@ -188,11 +173,11 @@ void respond(int n)
 
                         if (read_fp != NULL)
                         {
-                            chars_read = fread(buffer, sizeof(char), BUFSIZ, read_fp);
+                            chars_read = fread(buffer, sizeof(char), BUFSIZ, read_fp);                            
                             if (chars_read > 0)
                             {
                                 write(clients[n], buffer, bytes_read);
-                                bytes_read -= strlen(data_to_send);
+//                                bytes_read -= strlen(data_to_send);
                             }
                             else
                                 printf("chars_read: %d\n", chars_read);
